@@ -22,7 +22,43 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  <!-- Header / Navbar -->
+  <header class="bg-indigo-600 text-white py-4 shadow-md">
+    <div class="max-w-5xl mx-auto flex justify-between items-center px-4">
+      <h1 class="text-xl font-bold">Habit Tracker</h1>
+      <% if user_signed_in? %>
+        <div class="flex items-center gap-4 text-sm">
+          <span>Hi, <%= current_user.email %></span>
+          <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "underline hover:text-gray-200" %>
+        </div>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path, class: "underline hover:text-gray-200 text-sm" %>
+      <% end %>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="flex-1 w-full max-w-5xl mx-auto px-4 py-6">
+    <% if notice %>
+      <div class="mb-4 p-3 bg-green-100 text-green-800 rounded">
+        <%= notice %>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="mb-4 p-3 bg-red-100 text-red-800 rounded">
+        <%= alert %>
+      </div>
+    <% end %>
+
     <%= yield %>
-  </body>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 text-center text-xs text-gray-600 py-4">
+    &copy; <%= Time.current.year %> Habit Tracker
+  </footer>
+</body>
+
 </html>

@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "habit_#{@habit.id}" do %>
+  <%= render 'habits/habit_card', habit: @habit %>
+<% end %>

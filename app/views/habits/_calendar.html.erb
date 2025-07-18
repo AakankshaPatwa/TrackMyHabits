@@ -1,0 +1,28 @@
+<div class="overflow-x-auto">
+  <div class="grid grid-cols-7 gap-1 text-center text-xs">
+    <!-- Weekday headers -->
+    <% ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].each do |day| %>
+      <div class="font-semibold text-gray-600"><%= day %></div>
+    <% end %>
+
+    <% start_date = Date.today.beginning_of_month.beginning_of_week(:sunday) %>
+    <% end_date = Date.today.end_of_month.end_of_week(:sunday) %>
+
+    <% (start_date..end_date).each do |date| %>
+      <% done = habit.habit_checkins.exists?(date: date) %>
+      <% cell_classes = "aspect-square flex items-center justify-center rounded border transition " %>
+      <% cell_classes += if date.month != Date.today.month
+          'bg-gray-100 text-gray-400'
+        elsif done
+          'bg-green-500 text-white'
+        else
+          'bg-white hover:bg-gray-200 cursor-pointer'
+        end
+      %>
+
+      <div class="<%= cell_classes %>">
+        <%= date.day %>
+      </div>
+    <% end %>
+  </div>
+</div>
