@@ -1,6 +1,6 @@
 class HabitsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_habit, only: [:show, :edit, :update, :destroy]
+  before_action :set_habit, only: [ :show, :edit, :update, :destroy ]
 
   # GET /habits
   def index
@@ -47,7 +47,7 @@ class HabitsController < ApplicationController
   # PATCH/PUT /habits/:id
   def update
     if @habit.update(habit_params)
-      redirect_to habits_path, notice: 'Habit was successfully updated.'
+      redirect_to habits_path, notice: "Habit was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -56,7 +56,7 @@ class HabitsController < ApplicationController
   # DELETE /habits/:id
   def destroy
     @habit.destroy
-    redirect_to habits_path, notice: 'Habit was successfully deleted.'
+    redirect_to habits_path, notice: "Habit was successfully deleted."
   end
 
   private

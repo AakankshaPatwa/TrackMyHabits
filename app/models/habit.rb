@@ -29,7 +29,7 @@ class Habit < ApplicationRecord
       else
         current = 1
       end
-      longest = [longest, current].max
+      longest = [ longest, current ].max
       prev_day = day
     end
     longest

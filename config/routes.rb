@@ -3,14 +3,14 @@ Rails.application.routes.draw do
   devise_for :users
 
   authenticated :user do
-    root to: 'habits#index', as: :authenticated_root
+    root to: "habits#index", as: :authenticated_root
     resources :habits do
-      resources :habit_checkins, only: [:create, :destroy]
+      resources :habit_checkins, only: [ :create, :destroy ]
     end
   end
 
   unauthenticated do
-    root to: 'home#index'
+    root to: "home#index"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
