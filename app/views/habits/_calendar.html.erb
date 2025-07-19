@@ -1,3 +1,5 @@
+<!-- app/views/habits/_calendar.html.erb -->
+
 <div class="overflow-x-auto">
   <div class="grid grid-cols-7 gap-1 text-center text-xs">
     <!-- Weekday headers -->
@@ -9,14 +11,22 @@
     <% end_date = Date.today.end_of_month.end_of_week(:sunday) %>
 
     <% (start_date..end_date).each do |date| %>
-      <% done = habit.habit_checkins.exists?(date: date) %>
+      <% is_future = date > Date.today %>
+      <% is_done = habit.habit_checkins.exists?(date: date) %>
+      <% is_today = date == Date.today %>
+
       <% cell_classes = "aspect-square flex items-center justify-center rounded border transition " %>
-      <% cell_classes += if date.month != Date.today.month
-          'bg-gray-100 text-gray-400'
-        elsif done
-          'bg-green-500 text-white'
+
+      <% cell_classes += if is_future
+          "bg-gray-100 text-gray-400 cursor-not-allowed opacity-50"
+        elsif is_done
+          "bg-green-500 text-white"
+        elsif date < Date.today && !is_done
+          "bg-red-200 text-red-800"
+        elsif is_today
+          "bg-yellow-100 text-yellow-800"
         else
-          'bg-white hover:bg-gray-200 cursor-pointer'
+          "bg-white hover:bg-gray-200 cursor-pointer"
         end
       %>
 

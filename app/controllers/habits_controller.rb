@@ -14,11 +14,25 @@ class HabitsController < ApplicationController
 
   # POST /habits
   def create
-    @habit = current_user.habits.new(habit_params)
-    if @habit.save
-      redirect_to habits_path, notice: 'Habit was successfully created.'
+    @habit = current_user.habits.find_by(name: habit_params[:name])
+
+    if @habit
+      # Already exists ➜ just create check-in if requested
+      if habit_params[:mark_done_today] == "1"
+        @habit.habit_checkins.find_or_create_by(date: Date.today)
+      end
+      redirect_to habits_path, notice: "Habit already exists — today marked done!"
     else
-      render :new, status: :unprocessable_entity
+      @habit = current_user.habits.build(habit_params.except(:mark_done_today))
+
+      if @habit.save
+        if habit_params[:mark_done_today] == "1"
+          @habit.habit_checkins.create(date: Date.today)
+        end
+        redirect_to habits_path, notice: "Habit created successfully!"
+      else
+        render :new
+      end
     end
   end
 
@@ -52,6 +66,6 @@ class HabitsController < ApplicationController
   end
 
   def habit_params
-    params.require(:habit).permit(:name, :description)
+    params.require(:habit).permit(:name, :description, :mark_done_today)
   end
 end

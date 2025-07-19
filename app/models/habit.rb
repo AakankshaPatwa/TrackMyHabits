@@ -1,6 +1,7 @@
 class Habit < ApplicationRecord
   belongs_to :user
   has_many :habit_checkins, dependent: :destroy
+  validates :name, presence: true, uniqueness: { scope: :user_id }
 
   def done_days
     habit_checkins.pluck(:date)

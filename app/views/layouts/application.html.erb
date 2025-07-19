@@ -23,10 +23,12 @@
   </head>
 
 <body class="bg-gray-50 min-h-screen flex flex-col">
-  <!-- Header / Navbar -->
   <header class="bg-indigo-600 text-white py-4 shadow-md">
     <div class="max-w-5xl mx-auto flex justify-between items-center px-4">
-      <h1 class="text-xl font-bold">Habit Tracker</h1>
+      <%= link_to root_path, class: "text-xl font-bold hover:text-gray-200" do %>
+        Habit Tracker
+      <% end %>
+
       <% if user_signed_in? %>
         <div class="flex items-center gap-4 text-sm">
           <span>Hi, <%= current_user.email %></span>

@@ -7,7 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-User.create!(email: 'a1@yopmail.com', password: '123456Pa').tap do |user|
+User.create!(email: 'a1@yopmail.com', password: '123456').tap do |user|
   habit = user.habits.create!(name: "Workout", description: "Daily exercise")
   habit.habit_checkins.create!(date: Date.today)
 end
